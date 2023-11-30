@@ -1,0 +1,21 @@
+CREATE TABLE product(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_name TEXT NOT NULL,
+        product_price INTEGER NOT NULL,
+        product_info TEXT NOT NULL
+);
+
+-- Insert Product
+addProduct:
+INSERT INTO product (product_name,product_price,product_info) VALUES (?,?,?);
+
+-- Get Product
+getProduct:
+SELECT * FROM product ORDER BY product_name DESC;
+
+getProductById:
+SELECT * FROM product WHERE id = ?;
+
+-- Delete Product
+deleteProduct:
+DELETE FROM product WHERE id = ?;

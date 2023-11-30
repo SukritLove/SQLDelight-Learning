@@ -1,6 +1,8 @@
-package ShowProduct
+package ui
 
-import InputProduct.InputProductScreen
+import Model.ProductListEvent
+import Model.ProductListState
+import ui.InputProductScreen
 import UIelement.TopBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
@@ -22,9 +25,11 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import data.Product
 import data.ProductStore
 
 class ShowProductScreen : Screen {
+
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -43,30 +48,16 @@ class ShowProductScreen : Screen {
 }
 
 @Composable
-private fun CreateProdScreen(onInputProdClick: () -> Unit) {
+private fun CreateProdScreen(
+    onInputProdClick: () -> Unit
+) {
     val product = ProductStore.productData
     LazyColumn(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        item {
-            Row(
-                Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                CreateCard(
-                    modifier = Modifier.background(Color.LightGray).padding(50.dp, 20.dp),
-                    value = product.productName
-                )
-                Spacer(Modifier.padding(5.dp))
-                CreateCard(
-                    modifier = Modifier.background(Color.LightGray).padding(70.dp, 20.dp),
-                    value = product.productInfo
-                )
-            }
-        }
+        item { ProductListItem(product = Product(null, "","")) }
         item {
             Spacer(Modifier.padding(20.dp))
             Button(onClick = onInputProdClick) {
@@ -76,12 +67,4 @@ private fun CreateProdScreen(onInputProdClick: () -> Unit) {
     }
 }
 
-@Composable
-fun CreateCard(modifier: Modifier, value: String) {
-    Card() {
-        Text(
-            value, modifier = modifier
-        )
-    }
-}
 
